@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<link rel="stylesheet" href="{% static 'UWEFlix/main.css' %}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Homepage</title>
+
+</head>
+
+<body>
+
+<div class="top_bar">
+
+    <ul>
+        <li><a class="active" href="/">Home</a></li>
+        <li><a href="{% url 'Register'%}">Register</a></li>
+        {% if request.user.is_anonymous %}
+
+        <li style="float:right"><a href="{% url 'Login' %}">Login</a></li>
+
+        {% else %}
+        <li style="float:right"><a href="{% url 'Logout' %}">Logout</a></li>
+        {% endif %}
+
+
+    </ul>
+
+    <div class="main">
+    {% block page %}
+
+    {% endblock %}
+</div>
+
+<div class="foot">
+    <p>All rights reserved UWEFlix 2023 ©</p>
+</div>
+
+</body>
+
+</html>

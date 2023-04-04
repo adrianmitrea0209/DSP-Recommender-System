@@ -1,0 +1,24 @@
+{% extends 'recommender_system_django_app/parent_page.html' %}
+
+{% block page %}
+
+<h1>Login</h1>
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <label for="username">Email/Username</label>
+    <input type="text" id="username" name="username" required/>
+
+    <br>
+
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password" required/>
+
+    <br>
+
+    <button class="button">Login</button>
+</form>
+
+<p>Don't have an account? <a href="{% url 'Register' %}">Register</a></p>
+{% endblock %}
