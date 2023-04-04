@@ -1,0 +1,11 @@
+asgiref==3.6.0
+Django==4.1.7
+django-axes==5.40.1
+django-ipware==5.0.0
+django-session-timeout==0.1.0
+mysqlclient==2.1.1
+Pillow==9.4.0
+six==1.16.0
+sqlparse==0.4.3
+tzdata==2022.7
+django-widget-tweaks==1.4.12
