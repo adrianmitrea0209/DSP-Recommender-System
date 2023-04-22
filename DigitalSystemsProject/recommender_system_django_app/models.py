@@ -19,3 +19,7 @@ class ComicRatings(models.Model):
     userRatings = models.IntegerField(choices = userRatingOptions )
     userID = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE)
     comicID = models.ForeignKey(MarvelComics, null=True, blank = True, on_delete=models.CASCADE)
+
+class IssueImageNames(models.Model):
+    comicID = models.ForeignKey(MarvelComics, null=True, blank=True, on_delete=models.CASCADE)
+    issueImageName = models.ImageField('issueImages/Images/', null=True, blank=True)

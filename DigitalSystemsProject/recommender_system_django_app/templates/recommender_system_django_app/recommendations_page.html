@@ -1,0 +1,27 @@
+{% extends 'recommender_system_django_app/parent_page.html' %}
+{% block page %}
+
+<table>
+    <tr>
+        <th>Comic Name</th>
+        <th>Issue Title</th>
+        <th>Writer</th>
+        <th>Date of publication</th>
+        <th>Issue Description</th>
+        <th>Price</th>
+    </tr>
+
+    {%for comic in recommended_comics%}
+    <tr>
+        <td>{{comic.comicID.comicName}}</td>
+        <td>{{comic.comicID.issueTitle}}</td>
+        <td>{{comic.comicID.writer}}</td>
+        <td>{{comic.comicID.dateOfPublication}}</td>
+        <td>{{comic.comicID.issueDescription}}</td>
+        <td>{{comic.comicID.price}}</td>
+
+    </tr>
+    {%endfor%}
+</table>
+{%endblock%}
+

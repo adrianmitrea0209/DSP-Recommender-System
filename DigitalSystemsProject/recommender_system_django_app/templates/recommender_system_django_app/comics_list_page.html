@@ -1,0 +1,30 @@
+{% extends 'recommender_system_django_app/parent_page.html' %}
+{% block page %}
+
+<table>
+    <tr>
+        <th>Comic Name</th>
+        <th>Issue Title</th>
+        <th>Writer</th>
+        <th>Date of publication</th>
+        <th>Issue Description</th>
+        <th>Price</th>
+        <th>Issue Cover</th>
+        <th>View</th>
+    </tr>
+
+    {%for comic in comics_list%}
+    <tr>
+        <td>{{comic.comicID.comicName}}</td>
+        <td>{{comic.comicID.issueTitle}}</td>
+        <td>{{comic.comicID.writer}}</td>
+        <td>{{comic.comicID.dateOfPublication}}</td>
+        <td>{{comic.comicID.issueDescription}}</td>
+        <td>{{comic.comicID.price}}</td>
+        <td><img src="/issueImages/Images/{{comic.issueImageName}}"></td>
+        <td><a href="individualComic/{{comic.id}}">View</a></td>
+
+    </tr>
+    {%endfor%}
+</table>
+{%endblock%}

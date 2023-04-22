@@ -23,4 +23,5 @@ urlpatterns = [
     #Admin path
     path('admin/', admin.site.urls),
     path('', include('recommender_system_django_app.urls')), 
-]
+    
+] +static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
