@@ -1,26 +1,25 @@
-.top_bar {
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 100%;
-    background-color: gray;
-}
+.btn-color{
+    background-color: #0e1c36;
+    color: #fff;
+    
+  }
+  
+  .profile-image-pic{
+    height: 200px;
+    width: 200px;
+    object-fit: cover;
+  }
+  
+  
+  
+  .cardbody-color{
+    background-color: #ebf2fa;
+  }
+  
+  a{
+    text-decoration: none;
+  }
 
-.foot {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    font-size: 20px;
-    text-align: center;
-    padding: 0px 0px 0px 0px;
-    background-color: black;
-    color: white;
-}
-
-.main {
-    font-size: 25px;
-    padding: 70px;
-    display: flex;
-    flex-direction: column;
+.foot{
+    background-color: #282828;
 }

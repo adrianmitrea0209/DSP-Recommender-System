@@ -1,31 +1,67 @@
 {% extends 'recommender_system_django_app/parent_page.html' %}
 {% block page %}
 
-<h1>Register</h1>
+{% load static %}
+<link rel="stylesheet" href="{% static '/recommender_system_django_app/styles.css' %}">
 
-<form method="POST" enctype="multipart/form-data">
+<form method="POST" enctype="multipart/form-data" style="background-color: #181818;">
     {% csrf_token %}
 
-    {{registrationForm.first_name.label}}
-    {{registrationForm.first_name}}
-    <br>
-    {{registrationForm.last_name.label}}
-    {{registrationForm.last_name}}
-    <br>
-    {{registrationForm.username.label}}
-    {{registrationForm.username}}
-    <br>
-    {{registrationForm.password1.label}}
-    {{registrationForm.password1}}
-    <br>
-    {{registrationForm.password2.label}}
-    {{registrationForm.password2}}
-    <br>
-    <button class="button">Submit</button>
+    <div class="container">
+
+        <div class="row">
+
+          <div class="col-md-6 offset-md-3">
+
+            <h2 class="text-center text-light mt-5">Registration Form</h2>
+            <div class="text-center mb-5 text-light">Where the journey begins!</div>
+            <div class="card my-5" style="background-color: #282828;">
+    
+              <form class="card-body cardbody-color p-lg-5">
+    
+                <div class="text-center">
+                  <img src="/issueImages/Images/IronManLogo.jpg" class="img-fluid profile-image-pic img-thumbnail rounded-circle my-3" width="100px" alt="profile" style="background-color: #282828; border-color: #282828;">
+                </div>
+    
+                <div class="mb-3" style="margin:10px;">
+                  <p style="color: white; margin-bottom: 10px;">{{registrationForm.first_name.label}}</p>
+                  <input type="text" name = "first_name" class="form-control" id = "firstName" aria-describedby="emailHelp" placeholder="First name" style="background-color: #181818;">
+                </div>
+
+                <div class="mb-3" style="margin:10px;">
+                  <p style="color: white; margin-bottom: 10px;">{{registrationForm.last_name.label}}</p>
+                  <input type="text" name = "last_name" class="form-control" id = "lastName" aria-describedby="emailHelp" placeholder="Last name" style="background-color: #181818;">
+                </div>
+
+                <div class="mb-3" style="margin:10px;">
+                    <p style="color: white; margin-bottom: 10px;">{{registrationForm.username.label}}</p>
+                    <input type="text" name = "username" class="form-control" id = "username" aria-describedby="emailHelp" placeholder="Username" style="background-color: #181818;">
+                </div>
+                
+                <div class="mb-3" style="margin:10px;">
+                    <p style="color: white; margin-bottom: 10px;">{{registrationForm.password1.label}}</p>
+                    <input type="password" name = "password1" class="form-control" id = "password1" aria-describedby="emailHelp" placeholder="Password" style="background-color: #181818;">
+                </div>
+
+                <div class="mb-3" style="margin:10px;">
+                    <p style="color: white; margin-bottom: 10px;"> {{registrationForm.password2.label}}</p>
+                    <input type="password" name = "password2" class="form-control" id = "password2" aria-describedby="emailHelp" placeholder="Confirm Password" style="background-color: #181818;">
+                  </div>
+
+                <div class="text-center" style="margin:10px;"><button type="submit" class="btn btn-color px-5 mb-5 w-100" style="background-color: #181818;">Register</button></div>
+
+                <div id="emailHelp" class="form-text text-center mb-5 text-light">
+                    Already have an account? <a href="{% url 'Login' %}" class="text-light fw-bold"> Sign in!</a>
+
+                </div>
+              </form>
+            </div>
+    
+          </div>
+        </div>
+      </div>
 </form>
 
 {{form.errors}}
-
-<p>Already have an account? <a href="{% url 'Login' %}">Login</a></p>
 
 {% endblock %}

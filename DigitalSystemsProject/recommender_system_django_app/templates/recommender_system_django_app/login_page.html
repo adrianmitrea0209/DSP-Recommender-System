@@ -2,23 +2,52 @@
 
 {% block page %}
 
-<h1>Login</h1>
+{% load static %}
+<link rel="stylesheet" href="{% static '/recommender_system_django_app/styles.css' %}">
 
-<form method="POST" enctype="multipart/form-data">
+<form method="POST" enctype="multipart/form-data" style = "background-color:#181818;">
     {% csrf_token %}
 
-    <label for="username">Email/Username</label>
-    <input type="text" id="username" name="username" required/>
+    <div class="container">
 
-    <br>
+      <div class="row">
 
-    <label for="password">Password</label>
-    <input type="password" id="password" name="password" required/>
+        <div class="col-md-6 offset-md-3">
 
-    <br>
+          <h2 class="text-center text-light mt-5" >Login Form</h2>
 
-    <button class="button">Login</button>
+          <div class="text-center mb-5 text-light">One more step!</div>
+
+          <div class="card my-5" style="background-color: #282828;" >
+  
+            <form class="card-body cardbody-color p-lg-5">
+
+              <div class="text-center">
+                <img src="/issueImages/Images/SpiderManLogo.jpg" width="250px" alt="profile" style="margin:10px">
+              </div>
+  
+              <div class="mb-3" style="margin: 10px;">
+                <label for="username" class="form-label" style="color:white">Username</label>
+                <input type="text" name="username" id="username" class="form-control" placeholder="Username" aria-describedby="helpId" required style="background-color: #181818;">
+              </div>
+
+              <div class="mb-3" style="margin: 10px;">
+                <label for="password" class="form-label" style="color:white">Password</label>
+                <input type="password" name="password" id="password" class="form-control" placeholder="Password" aria-describedby="helpId" required style="background-color: #181818;">          
+              </div>
+
+              <div class="text-center" style="margin: 10px;"><button type="submit" class="btn btn-color px-5 mb-5 w-100" style="background-color: #181818;">Login</button></div>
+
+              <div id="emailHelp" class="form-text text-center mb-5 text-light">
+                Not Registered? <a href="{% url 'Register'%}" class="text-light fw-bold"> Create an Account</a>
+              </div>
+
+            </form>
+          </div>
+  
+        </div>
+      </div>
+    </div>
+
 </form>
-
-<p>Don't have an account? <a href="{% url 'Register' %}">Register</a></p>
 {% endblock %}
