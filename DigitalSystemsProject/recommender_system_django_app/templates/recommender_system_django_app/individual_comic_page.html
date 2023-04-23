@@ -1,18 +1,33 @@
 {% extends 'recommender_system_django_app/parent_page.html' %}
 {% block page %}
 
+<body style="background-color: #181818;">
+   <div class="container">
+
+    <div class="row">
+
+      <div class="col-sm" style="border: 5px solid black; border-radius: 10px; margin: auto; margin-top: 10px; margin-left: 2px; background-color: #282828;">
+
+        <img src="/issueImages/Images/{{individual_comic.issueImageName}}" style="width:30%; height: 20%; padding: 15px; float: left; vertical-align: middle;">
+
+        <h1 style="font-size: 25px; text-align: left; color: white; margin-top: 10px;">{{individual_comic.comicID.issueTitle}}</h3>
+    
+        <p style="font-style:italic; text-align: left; color: white; margin-top: -10px;"> Writer: {{individual_comic.comicID.writer}} </p>
+
+        <p style="font-style:italic; text-align: left; color: white; margin-top: -20px;"> Date of publication: {{individual_comic.comicID.dateOfPublication}}</p>
+
+        <h4 style="font-size: 18px; text-align: left; color: white; margin-top: 20px;">Plot</h2>
+
+        <p style="font-style:italic; text-align: lef; color: white; margin-top: -10px;"><td>{{individual_comic.comicID.issueDescription}}</p>
+      </div>
+
+    </div>
+  </div>
+
 <table>
-    <tr>
-        <th>Comic Name</th>
-        <th>Issue Title</th>
-        <th>Writer</th>
-        <th>Date of publication</th>
-        <th>Issue Description</th>
-        <th>Price</th>
-    </tr>
 
     <tr>
-        <td>{{individual_comic.comicName}}</td>
+        <td>{{individual_comic.comicID.comicName}}</td>
         <td>{{individual_comic.issueTitle}}</td>
         <td>{{individual_comic.writer}}</td>
         <td>{{individual_comic.dateOfPublication}}</td>
@@ -20,5 +35,8 @@
         <td>{{individual_comic.price}}</td>
 
     </tr>
-</table>
+</table> 
+</body>
+
+
 {%endblock%}

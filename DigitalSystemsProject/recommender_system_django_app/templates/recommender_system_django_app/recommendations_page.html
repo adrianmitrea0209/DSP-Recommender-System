@@ -13,12 +13,13 @@
 
     {%for comic in recommended_comics%}
     <tr>
-        <td>{{comic.comicID.comicName}}</td>
-        <td>{{comic.comicID.issueTitle}}</td>
-        <td>{{comic.comicID.writer}}</td>
-        <td>{{comic.comicID.dateOfPublication}}</td>
-        <td>{{comic.comicID.issueDescription}}</td>
-        <td>{{comic.comicID.price}}</td>
+        <td>{{comic.id}}</td>
+        <td>{{comic.comicName}}</td>
+        <td>{{comic.issueTitle}}</td>
+        <td>{{comic.writer}}</td>
+        <td>{{comic.dateOfPublication}}</td>
+        <td>{{comic.issueDescription}}</td>
+        <td>{{comic.price}}</td>
 
     </tr>
     {%endfor%}

@@ -1,30 +1,32 @@
 {% extends 'recommender_system_django_app/parent_page.html' %}
 {% block page %}
 
-<table>
-    <tr>
-        <th>Comic Name</th>
-        <th>Issue Title</th>
-        <th>Writer</th>
-        <th>Date of publication</th>
-        <th>Issue Description</th>
-        <th>Price</th>
-        <th>Issue Cover</th>
-        <th>View</th>
-    </tr>
+<body style="background-color: #181818;">
+    <div class="container">
 
-    {%for comic in comics_list%}
-    <tr>
-        <td>{{comic.comicID.comicName}}</td>
-        <td>{{comic.comicID.issueTitle}}</td>
-        <td>{{comic.comicID.writer}}</td>
-        <td>{{comic.comicID.dateOfPublication}}</td>
-        <td>{{comic.comicID.issueDescription}}</td>
-        <td>{{comic.comicID.price}}</td>
-        <td><img src="/issueImages/Images/{{comic.issueImageName}}"></td>
-        <td><a href="individualComic/{{comic.id}}">View</a></td>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3">
+    
+          {%for comic in comics_list%}
+    
+            <div class="col-md-3" style="border: 5px solid black; border-radius: 10px; margin: auto; margin-top: 10px; margin-left: 2px;  background-color: #282828;">
+    
+              <a href="individualComic/{{comic.id}}"><img src="/issueImages/Images/{{comic.issueImageName}}" style="width:100%; height: 100%; padding: 10px"></a>
+    
+              <h3 style="font-size: 20px; text-align: center; color: white">{{comic.comicID.issueTitle}}</h3>
+    
+              <p style="font-style:italic; text-align: center; color: white"> By {{comic.comicID.writer}}</p>
+    
+              <strong><p style="text-align: center; color: white"> Price: {{comic.comicID.price}}</p></strong>
+            
+              <a href="individualComic/{{comic.id}}"><p style="color: white; text-align:center;">View</p></a>
+    
+            </div>
+    
+          {% endfor %}
+    
+        </div>
+        
+      </div>
+</body>
 
-    </tr>
-    {%endfor%}
-</table>
 {%endblock%}

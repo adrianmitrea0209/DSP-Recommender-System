@@ -83,20 +83,19 @@ def recommender_system_function(request):
 
     #print(comics.head(30))
 
-    comicRatings["comicID"] = comicRatings["id"].astype(str)
-    comicRatings["userID"] = comicRatings["id"].astype(str)
+    comicRatings["comicID"] = comicRatings["comicID_id"].astype(str)
+    comicRatings["userID"] = comicRatings["userID_id"].astype(str)
     comicRatings["User_Ratings"] = pd.to_numeric(comicRatings["userRatings"])
 
     comicRatings["user_index"] = comicRatings["userID"].astype("category").cat.codes
     comicRatings["comic_index"] = comicRatings["comicID"].astype("category").cat.codes
-    #print(comicRatings)
 
     ratings_matrix = coo_matrix((comicRatings["User_Ratings"], (comicRatings["user_index"], comicRatings["comic_index"])))
     ratings_mat = ratings_matrix.tocsr()
     #print(ratings_mat)
 
     similarity = cosine_similarity(ratings_mat[0,:], ratings_mat).flatten()
-    indices = np.argpartition(similarity, -9)[-9:]  
+    indices = np.argpartition(similarity, -3)[-3:]  
     #print(indices)
 
     similar_users = comicRatings[comicRatings["user_index"].isin(indices)].copy()
@@ -116,9 +115,12 @@ def recommender_system_function(request):
 
     comicRecommendations["score"] = comicRecommendations["mean"] * comicRecommendations["adjusted_count"]
     currentUser = request.user
-    myComics = comicRatings.loc[comicRatings['userID'] == str(currentUser)]
+    print(currentUser.id)
+    myComics = comicRatings[comicRatings['userID'] == str(currentUser.id)]
 
-    #print(myComics)
+    print(myComics)
+
+    #print(comicRatings["userID_id"])
 
     comicRecommendations = comicRecommendations[~comicRecommendations["comicID"].isin(myComics["comicID"])]
     #print(comicRecommendations)
@@ -126,20 +128,22 @@ def recommender_system_function(request):
     comicRecommendations = comicRecommendations[~comicRecommendations["comicID"].isin(myComics["comicID"])]
     #print(comicRecommendations)
 
-    comicRecommendations = comicRecommendations[comicRecommendations["mean"] >=4]
+    comicRecommendations = comicRecommendations[comicRecommendations["mean"] >= 4]
     top_recs = comicRecommendations.sort_values("mean", ascending=False)
+    print(len(top_recs))
     topRecommendations = top_recs["comicID"].unique()
-    topRecommendations
-    print(top_recs.columns)
+    print(len(topRecommendations))
+    df1 = pd.DataFrame(topRecommendations)
+    #print(top_recs.columns)
 
-    top_recommendations = top_recs.values.tolist()
+    top_recommendations = df1.values.tolist()
 
     comicDetails = []
 
     #print(top_recommendations)
 
     for comic in top_recommendations:
-        comicDetails.append(ComicRatings.objects.get(id = int(comic[0])))
+        comicDetails.append(MarvelComics.objects.get(id = int(comic[0])))
 
     conn.close()
     context = {"recommended_comics": comicDetails}
@@ -151,7 +155,7 @@ def comics_list_function(request):
     return render(request, "recommender_system_django_app/comics_list_page.html", context)
 
 def individual_comic_function(request, comicID):
-    individualComic = MarvelComics.objects.get(id = comicID)
+    individualComic = IssueImageNames.objects.get(id = comicID)
     print(individualComic)
     context = {"individual_comic" : individualComic}
     return render(request, "recommender_system_django_app/individual_comic_page.html", context)

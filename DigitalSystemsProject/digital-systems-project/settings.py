@@ -50,7 +50,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'DigitalSystemsProject.urls'
+ROOT_URLCONF = 'digital-systems-project.urls'
 
 TEMPLATES = [
     {
@@ -68,7 +68,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'DigitalSystemsProject.wsgi.application'
+WSGI_APPLICATION = 'digital-systems-project.wsgi.application'
 
 
 # Database
@@ -76,10 +76,21 @@ WSGI_APPLICATION = 'DigitalSystemsProject.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+         'ENGINE': 'django.db.backends.sqlite3',
+         'NAME': BASE_DIR / 'db.sqlite3',
+     }
+ }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'digital-systems-project-db',
+#         'USER': 'admin',
+#         'PASSWORD': 'admin0209',
+#         'HOST': 'db',
+#         'PORT': '3306',
+#     }
+# }
 
 
 # Password validation
@@ -125,3 +136,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_ROOT = BASE_DIR/"issueImages"
 MEDIA_URL = "/issueImages/"
+
