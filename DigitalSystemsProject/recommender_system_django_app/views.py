@@ -2,6 +2,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 import csv
+from django.contrib.auth.decorators import login_required
+from .decorators import *
 from recommender_system_django_app.models import *
 from .decorators import *
 from .forms import *
@@ -31,6 +33,7 @@ def login_function(request):
     
     return render(request, 'recommender_system_django_app/login_page.html')
 
+@login_required(login_url='/login')
 def logout_function(request):
     # with open("FinalComicsDataset.csv", "r", encoding = "utf8") as csvfile:
     #     dataReader = csv.DictReader(csvfile)
@@ -67,7 +70,11 @@ def register_function(request):
         registrationFormNewUser = NewUserForm(request.POST)
         
         if registrationFormNewUser.is_valid():
-            registrationFormNewUser.save()
+
+            registrationFormNewUser.save(commit=False)
+            group = Group.objects.get(name='Regular User')
+            user = registrationFormNewUser.save()
+            user.groups.add(group)
             return redirect(login_function)
         else:
             print("Hello")
@@ -75,7 +82,7 @@ def register_function(request):
             return render(request, 'recommender_system_django_app/registration_page.html', {'registrationForm': registrationFormNewUser, 'errorMessage' : errorMessage})
     return render(request, 'recommender_system_django_app/registration_page.html', {'registrationForm': registrationFormNewUser})
 
-
+@login_required(login_url='/login')
 def recommender_system_function(request):
     conn = sqlite3.connect("db.sqlite3", isolation_level=None)
     comics = pd.read_sql_query("SELECT * from recommender_system_django_app_marvelcomics", conn)
@@ -129,10 +136,13 @@ def recommender_system_function(request):
     #print(comicRecommendations)
 
     comicRecommendations = comicRecommendations[comicRecommendations["mean"] >= 4]
+
     top_recs = comicRecommendations.sort_values("mean", ascending=False)
     print(len(top_recs))
+
     topRecommendations = top_recs["comicID"].unique()
     print(len(topRecommendations))
+
     df1 = pd.DataFrame(topRecommendations)
     #print(top_recs.columns)
 
@@ -159,3 +169,32 @@ def individual_comic_function(request, comicID):
     print(individualComic)
     context = {"individual_comic" : individualComic}
     return render(request, "recommender_system_django_app/individual_comic_page.html", context)
+
+@login_required(login_url='/login')
+@allowed_users(allowed_roles='Admin')
+def all_comics_function(request):
+    comics = MarvelComics.objects.all()
+    print(comics)
+    context = {"comics_list" : comics}
+    return render(request, "recommender_system_django_app/admin_view.html", context)
+
+@login_required(login_url='/login')
+@allowed_users(allowed_roles='Admin')
+def update_comic_function(request, comicID):
+    comicDetails = MarvelComics.objects.get(id = comicID)
+    print(comicDetails)
+    context = {"comic details" : comicDetails}
+    updateForm = UpdateComicsForm(request.POST or None, instance = comicDetails)
+    if updateForm.is_valid():
+        updateForm.save()
+        return redirect(all_comics_function)
+    context = {"updated_form": updateForm}
+    return render(request, "recommender_system_django_app/update_comic_page.html", context)\
+
+@login_required(login_url='/login')
+@allowed_users(allowed_roles='Admin')
+def delete_comic_function(request, comicID):
+    comicDetails = MarvelComics.objects.get(id = comicID)
+    print(comicDetails)
+    comicDetails.delete()
+    return redirect(all_comics_function)

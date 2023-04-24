@@ -1,0 +1,14 @@
+{% extends 'recommender_system_django_app/parent_page.html' %}
+
+{% block page %}
+
+<body style="background-color: #181818;">
+    <form method="POST" enctype="multipart/form-data">
+       {% csrf_token %}
+       {{ updated_form.as_p }}
+       <input type="submit" value="Update"> 
+    </form>
+    
+</body>
+
+{% endblock %}

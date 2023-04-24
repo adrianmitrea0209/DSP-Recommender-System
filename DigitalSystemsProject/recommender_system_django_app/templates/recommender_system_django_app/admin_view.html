@@ -1,0 +1,39 @@
+{% extends 'recommender_system_django_app/parent_page.html' %}
+
+{% block page %}
+
+<body style="background-color: #181818;">
+
+    <table>
+
+        <tr>
+            <th style="color:white">Id</th>
+            <th style="color:white">Comic Name</th>
+            <th style="color:white">Issue Title</th>
+            <th style="color:white">Writer</th>
+            <th style="color:white">Date of publication</th>
+            <th style="color:white">Description</th>
+            <th style="color:white">Price</th>
+            <th style="color:white">Update</th>
+            <th style="color:white">Delete</th>
+
+        </tr>
+
+        {% for comic in comics_list %}
+        <tr>
+                <td style="color:white">{{comic.id}}</td>
+                <td style="color:white">{{comic.comicName}}</td>
+                <td style="color:white">{{comic.issueTitle}}</td>
+                <td style="color:white">{{comic.writer}}</td>
+                <td style="color:white">{{comic.dateOfPublication}}</td>
+                <td style="color:white">{{comic.issueDescription}}</td>
+                <td style="color:white">{{comic.price}}</td>
+                <td style="color: white"><a href="updatecomic/{{comic.id}}">Update details</a></td>
+                <td style="color: white"><a href="deletecomic/{{comic.id}}">Delete comic</a></td>
+        </tr>
+        {% endfor %}
+        
+    </table> 
+</body>
+
+{% endblock %}
