@@ -15,7 +15,13 @@ import sqlite3
 
 # Create your views here.
 def homepage(request):
-    return render(request, 'recommender_system_django_app/parent_page.html')
+    spiderManComic = MarvelComics.objects.filter(characterName = "Spider-Man")
+    spiderManComicImage = IssueImageNames.objects.filter(comicID__in = spiderManComic)[:3]
+    print(spiderManComicImage)
+    context = {"spider_man_comic" : spiderManComicImage}
+    return render(request, "recommender_system_django_app/parent_page.html", context)
+    
+
 
 def login_function(request):
     if request.method == "POST":

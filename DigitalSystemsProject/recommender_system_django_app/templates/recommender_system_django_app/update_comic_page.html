@@ -3,11 +3,13 @@
 {% block page %}
 
 <body style="background-color: #181818;">
-    <form method="POST" enctype="multipart/form-data">
+    <form method="POST" enctype="multipart/form-data" style="color: white">
+        <br>
        {% csrf_token %}
        {{ updated_form.as_p }}
        <input type="submit" value="Update"> 
     </form>
+    <br>
     
 </body>
 

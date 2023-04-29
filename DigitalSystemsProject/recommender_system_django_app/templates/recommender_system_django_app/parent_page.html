@@ -13,7 +13,7 @@
 
 </head>
 
-<body>
+<body style="background-color: #181818;">
 
 <div class="top_bar">
          <nav class="navbar navbar-expand-sm navbar-dark" style="background-color: #282828;">
@@ -38,11 +38,13 @@
                         {% elif request.user|has_group:"Regular User" %}
                         <a class="nav-link active" aria-current="page" style="color: white;" href="/">Home</a>
                         <a class="nav-link active" aria-current="page" style="color: white;" href="{% url 'Comic_List' %}">Comics</a>
+                        <a class="nav-link active" aria-current="page" style="color: white;" href="{% url 'Recommend_Comic' %}">View Comic Recommendations</a>
                         <a class="nav-link active" aria-current="page" style="color: white;" href="{% url 'Logout'%}">Logout</a>
 
                         {% elif request.user|has_group:"Admin"%}
                         <a class="nav-link active" aria-current="page" style="color: white;" href="{% url 'Comics_List'%}">View All Comics</a>
                         <a class="nav-link active" aria-current="page" style="color: white;" href="{% url 'Logout'%}">Logout</a>
+                        
                         {% endif %}
 
                     </div>
@@ -52,7 +54,34 @@
 
     <div class="main">
     {% block page %}
+        <div>
+          <div class="container">
+            <h3 style="color:white">Spider-Man: With great power comes great responsibility!</h3>
 
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3">
+        
+              {%for spider_man in spider_man_comic%}
+        
+                <div class="col-md-3" style="border: 5px solid black; border-radius: 10px; margin: auto; margin-top: 10px; margin-left: 2px;  background-color: #282828;">
+        
+                  <img src="/issueImages/Images/{{spider_man.issueImageName}}" style="width:100%; height: 100%; padding: 10px">
+        
+                  <h3 style="font-size: 20px; text-align: center; color: white"> {{spider_man.comicID.issueTitle}} </h3>
+        
+                  <p style="font-style:italic; text-align: center; color: white"> By {{spider_man.comicID.writer}}</p>
+    
+                  <strong><p style="text-align: center; color: white"> Price: {{spider_man.comicID.price}}</p></strong>
+                  
+                  <a href="comicsList"><p style="color: white; text-align:center;">View more issues!</p></a>
+        
+                </div>
+        
+              {% endfor %}
+        
+            </div>
+            
+          </div>
+        </div>
     {% endblock %}
 </div>
 

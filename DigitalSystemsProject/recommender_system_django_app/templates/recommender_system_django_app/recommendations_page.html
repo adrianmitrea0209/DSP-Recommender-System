@@ -1,8 +1,18 @@
 {% extends 'recommender_system_django_app/parent_page.html' %}
 {% block page %}
 
+<style>
+    table, tr, th, td{
+        border: 10px solid #282828;
+        margin: 10px;
+    }
+</style>
+
+<h3 style="color:white">Comic Recommendations</h3>
+
 <table>
-    <tr>
+    <tr style ="color: white;">
+        <th>ID</th>
         <th>Comic Name</th>
         <th>Issue Title</th>
         <th>Writer</th>
@@ -12,7 +22,7 @@
     </tr>
 
     {%for comic in recommended_comics%}
-    <tr>
+    <tr style = "color: white;">
         <td>{{comic.id}}</td>
         <td>{{comic.comicName}}</td>
         <td>{{comic.issueTitle}}</td>
