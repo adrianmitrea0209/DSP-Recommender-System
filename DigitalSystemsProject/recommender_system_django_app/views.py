@@ -13,7 +13,7 @@ import pandas as pd
 import numpy as np
 import sqlite3
 
-# Create your views here.
+
 def homepage(request):
     spiderManComic = MarvelComics.objects.filter(characterName = "Spider-Man")
     spiderManComicImage = IssueImageNames.objects.filter(comicID__in = spiderManComic)[:3]
@@ -41,31 +41,6 @@ def login_function(request):
 
 @login_required(login_url='/login')
 def logout_function(request):
-    # with open("FinalComicsDataset.csv", "r", encoding = "utf8") as csvfile:
-    #     dataReader = csv.DictReader(csvfile)
-    #     for row in dataReader:
-    #         MarvelComics.objects.create(
-    #             comicName = row["Comic_Name"], 
-    #             issueTitle = row["Issue_Title"], 
-    #             dateOfPublication = row["Date_Of_Publication"],
-    #             issueDescription = row["Issue_Description"], 
-    #             writer = row["Writer"], 
-    #             price = row["Price"], 
-    #             characterName = row["Character_Name"], 
-    #             characterAlignment = row["Character_Alignment"], 
-    #             characterGender = row["Character_Gender"], 
-    #             characterRace = row["Character_Race"]
-    #             )
-
-    # with open("ratings.csv", "r", encoding = "utf8") as csvfile:
-    #     dataReader = csv.DictReader(csvfile)
-    #     for row in dataReader:
-    #         ComicRatings.objects.create(
-    #             userRatings = row["User Ratings"],
-    #             comicID = MarvelComics.objects.get(id = int(row["comicID"])),
-    #             userID = User.objects.get(id = int(row["userID"])),
-    #         )
-            
     logout(request)
     return redirect(login_function)
 
@@ -116,30 +91,22 @@ def recommender_system_function(request):
     similar_users = similar_users[similar_users["userID"]!= str(currentUser.id)] 
     print(similar_users)
 
+# Selects all the comic IDs that appear in similar users list
     comicRecommendations = similar_users.groupby("comicID").User_Ratings.agg(['count', 'mean'])
-    #print(comicRecommendations)
-
     comicRatings["comicID"] = comicRatings["comicID"].astype(str)
-
     comicRecommendations = comicRecommendations.merge(comicRatings, how="inner", on="comicID")
-    #print(comicRecommendations)
+
 
     comicRecommendations["adjusted_count"] = comicRecommendations["count"] * (comicRecommendations["count"] / 9)
-
     comicRecommendations["score"] = comicRecommendations["mean"] * comicRecommendations["adjusted_count"]
     currentUser = request.user
-    print(currentUser.id)
+
+# 
     myComics = comicRatings[comicRatings['userID'] == str(currentUser.id)]
 
-    print(myComics)
-
-    #print(comicRatings["userID_id"])
+    comicRecommendations = comicRecommendations[~comicRecommendations["comicID"].isin(myComics["comicID"])]
 
     comicRecommendations = comicRecommendations[~comicRecommendations["comicID"].isin(myComics["comicID"])]
-    #print(comicRecommendations)
-
-    comicRecommendations = comicRecommendations[~comicRecommendations["comicID"].isin(myComics["comicID"])]
-    #print(comicRecommendations)
 
     comicRecommendations = comicRecommendations[comicRecommendations["mean"] >= 4]
 
